@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             TiempoComidaSeeder::class,            
             AdicionalSeeder::class,
             PlatilloSeeder::class,
+            DiaSeeder::class,
         ]);
     }
 }

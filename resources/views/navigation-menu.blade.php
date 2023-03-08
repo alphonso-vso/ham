@@ -28,6 +28,15 @@
                     <x-nav-link href="{{ route('platillos') }}" :active="request()->routeIs('platillos')">
                         {{ __('Platillos') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('dias') }}" :active="request()->routeIs('dias')">
+                        {{ __('Días') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('platillos-dia') }}" :active="request()->routeIs('platillos-dia')">
+                        {{ __('Platiilos x Día') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('menu') }}" :active="request()->routeIs('menu')">
+                        {{ __('Menu') }}
+                    </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -166,6 +175,15 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('platillos') }}" :active="request()->routeIs('platillos')">
                 {{ __('Platillos') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('dias') }}" :active="request()->routeIs('dias')">
+                {{ __('Dias') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('platillos-dia') }}" :active="request()->routeIs('platillos-dia')">
+                {{ __('Platillos X Día') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('menu') }}" :active="request()->routeIs('menu')">
+                {{ __('Menú') }}
             </x-responsive-nav-link>
             @endrole
         </div>

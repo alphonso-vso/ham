@@ -37,4 +37,13 @@ Route::middleware([
     Route::get('/platillos', function () {
         return view('platillos');
     })->name('platillos');
+    Route::get('/dias', function () {
+        return view('dias');
+    })->name('dias');
+    Route::get('/platillos-dia', function () {
+        return view('platillos-dia');
+    })->name('platillos-dia');
+    Route::get('/menu', function () {
+        return view('menu');
+    })->name('menu');
 });
