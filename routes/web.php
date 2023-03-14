@@ -27,29 +27,32 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/tiempos', function () {
         return view('tiempos');
-    })->name('tiempos');
+    })->name('tiempos')->middleware('role:super-admin');
     Route::get('/adicionales', function () {
         return view('adicionales');
-    })->name('adicionales');
+    })->name('adicionales')->middleware('role:super-admin');
     Route::get('/usuarios', function () {
         return view('usuarios');
-    })->name('usuarios');
+    })->name('usuarios')->middleware('role:super-admin');
     Route::get('/platillos', function () {
         return view('platillos');
-    })->name('platillos');
+    })->name('platillos')->middleware('role:super-admin');
     Route::get('/dias', function () {
         return view('dias');
-    })->name('dias');
+    })->name('dias')->middleware('role:super-admin');
     Route::get('/platillos-dia', function () {
         return view('platillos-dia');
-    })->name('platillos-dia');
+    })->name('platillos-dia')->middleware('role:super-admin');
     Route::get('/menu', function () {
         return view('menu');
     })->name('menu');
     Route::get('/ordenes', function () {
         return view('ordenes');
-    })->name('ordenes');
+    })->name('ordenes')->middleware('role:super-admin');
     Route::get('/facturas', function () {
         return view('facturas');
     })->name('facturas');
+    Route::get('/control', function () {
+        return view('control');
+    })->name('control');
 });

@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('menu') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -40,6 +40,9 @@
                     @endrole
                     <x-nav-link href="{{ route('facturas') }}" :active="request()->routeIs('facturas')">
                         {{ __('Facturas') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('control') }}" :active="request()->routeIs('control')">
+                        {{ __('Control') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -141,6 +144,9 @@
             @endrole
             <x-responsive-nav-link href="{{ route('facturas') }}" :active="request()->routeIs('facturas')">
                 {{ __('Facturas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('control') }}" :active="request()->routeIs('control')">
+                {{ __('Control') }}
             </x-responsive-nav-link>
         </div>
 

@@ -9,5 +9,5 @@ class Factura extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_usuario', 'id_platillo', 'id_estado', 'cantidad', 'adicionales'];
+    protected $fillable = ['id_usuario', 'id_platillo', 'id_estado', 'id_orden', 'cantidad', 'adicionales'];
 }

@@ -53,7 +53,6 @@
             </thead>
             <tbody>
                 @foreach($datos as $dato)
-                    <td class="px-6 py-3">₡{{ ($dato->precio * $dato->cantidad) + ($dato->adicionales * $dato->precio_adicional) }}</td>
                 <tr class="odd:bg-white even:bg-slate-100 bg-white border-b hover:bg-slate-100">
                     <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->created_at)->diffForHumans() }}</td>
                     <td class="px-6 py-3">{{ $dato->cliente }}</td>

@@ -163,7 +163,7 @@ class Menus extends Component
 
     public function saveRecordL()
     {
-        Orden::create([
+        $lun = Orden::create([
             'id_usuario' => Auth::user()->id,
             'id_platillo' => $this->l['id_platillo'],
             'id_estado' => 0,
@@ -174,6 +174,7 @@ class Menus extends Component
             'id_usuario' => Auth::user()->id,
             'id_platillo' => $this->l['id_platillo'],
             'id_estado' => 0,
+            'id_orden' => $lun->id,
             'cantidad' => $this->l['cantidad'],
             'adicionales' => $this->l['adicionales'],
         ]);

@@ -11,6 +11,31 @@
         </span>
     </div>
     @endif
+    <div class="my-4">Gasto total del periodo</div>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+            <thead class="text-xs text-sky-50 uppercase bg-sky-800">
+                <tr>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Nombre') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Total') }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($datos_totales as $dato)
+                <tr class="odd:bg-white even:bg-slate-100 bg-white border-b hover:bg-slate-100">
+                    <td class="px-6 py-3">{{ $dato->cliente }}</td>
+                    <td class="px-6 py-3">₡{{ $dato->totales }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <div class="my-4">Detalle de gastos</div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
             <thead class="text-xs text-sky-50 uppercase bg-sky-800">

@@ -29,6 +29,7 @@ class Ordenes extends Component
             ->join('adicionals', 'platillos.id_tiempo_comida', '=', 'adicionals.id_tiempo_comida')
             ->select('ordens.*', 'users.name as cliente', 'platillos.nombre as platillo', 'platillos.precio as precio', 'adicionals.precio as precio_adicional')
             ->where('users.name', 'like', '%' . $this->search . '%')
+            ->orderBy('ordens.id', 'DESC')
             ->paginate(15);
 
         return view('livewire.ordenes', [

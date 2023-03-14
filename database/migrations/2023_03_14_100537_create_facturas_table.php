@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_usuario');
             $table->unsignedBigInteger('id_platillo');
             $table->unsignedBigInteger('id_estado');
+            $table->unsignedBigInteger('id_orden');
             $table->integer('cantidad');
             $table->integer('adicionales');
             $table->timestamps();
@@ -26,6 +27,10 @@ return new class extends Migration
             
             $table->foreign('id_platillo')->references('id')->on('platillos')
             ->onDelete('restrict')
+            ->onUpdate('cascade');
+            
+            $table->foreign('id_orden')->references('id')->on('ordens')
+            ->onDelete('cascade')
             ->onUpdate('cascade');
         });
     }
