@@ -13,8 +13,7 @@
     @endif
     <div>
         <div class="mt-1 mb-2 flex rounded-md shadow-sm">
-            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-slate-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm mr-4" placeholder="Buscar">
-            <button wire:click="confirmRecordAdd" class="text-blue-500 hover:text-blue-700 mr-4 transition ease-in-out duration-150">{{ __('Agregar') }}</button>
+            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-slate-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Buscar">
         </div>
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -22,16 +21,25 @@
             <thead class="text-xs text-sky-50 uppercase bg-sky-800">
                 <tr>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Nombre') }}
+                        {{ __('Platillo') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Correo') }}
+                        {{ __('Cantidad') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Creado') }}
+                        {{ __('Costo') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Actualizado') }}
+                        {{ __('Adicionales') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Costo') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Total') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Fecha') }}
                     </th>
                     @role('super-admin')
                     <th scope="col" class="px-6 py-3 uppercase">
@@ -42,22 +50,22 @@
             </thead>
             <tbody>
                 @foreach($datos as $dato)
-                @if ($dato->id != 1)
                 <tr class="odd:bg-white even:bg-slate-100 bg-white border-b hover:bg-slate-100">
-                    <td class="px-6 py-3">{{ $dato->name }}</td>
-                    <td class="px-6 py-3">{{ $dato->email }}</td>
-                    <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->created_at)->diffForHumans() }}</td>
-                    <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->updated_at)->diffForHumans() }}</td>
+                    <td class="px-6 py-3">{{ $dato->platillo }}</td>
+                    <td class="px-6 py-3">{{ $dato->cantidad }}</td>
+                    <td class="px-6 py-3">₡{{ $dato->precio }}</td>
+                    <td class="px-6 py-3">{{ $dato->adicionales }}</td>
+                    <td class="px-6 py-3">₡{{ $dato->precio_adicional }}</td>
+                    <td class="px-6 py-3">₡{{ ($dato->precio * $dato->cantidad) + ($dato->adicionales * $dato->precio_adicional) }}</td>
+                    <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->created_at)->format('d/m/Y h:i:s') }}</td>
                     @role('super-admin')
                     <td class="px-6 py-3">
-                        <a wire:click="confirmRecordEdit({{ $dato->id }})" class="text-blue-500 hover:text-blue-700 mr-4 transition ease-in-out duration-150" href="#">{{ __('Actualizar') }}</a>
                         <x-danger-button wire:click="confirmRecordDeletion({{ $dato->id }})" wire:loading.attr="disabled">
                             {{ __('Eliminar') }}
                         </x-danger-button>
                     </td>
                     @endrole
                 </tr>
-                @endif
                 @endforeach
             </tbody>
         </table>
@@ -65,6 +73,7 @@
             {{ $datos->links() }}
         </div>
     </div>
+
     <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
         <div class="text-center text-sm text-slate-500 sm:text-left">
             <div class="flex items-center gap-4">
@@ -80,53 +89,5 @@
 
         </div>
     </div>
-    <!-- Delete Record Confirmation Modal -->
-    <x-dialog-modal wire:model="confirmingRecordDeletion">
-        <x-slot name="title">
-            {{ __('Eliminar registro') }}
-        </x-slot>
-
-        <x-slot name="content">
-            {{ __('¿Estás seguro de eliminar este registro? Una vez elimines el registro todos sus datos se perderan.') }}
-        </x-slot>
-
-        <x-slot name="footer">
-            <x-secondary-button wire:click="$set('confirmingRecordDeletion', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ml-3" wire:click="deleteRecord({{ $confirmingRecordDeletion }})" wire:loading.attr="disabled">
-                {{ __('Eliminar') }}
-            </x-danger-button>
-        </x-slot>
-    </x-dialog-modal>
-    <!-- Add Meal Confirmation Modal -->
-    <x-dialog-modal wire:model="confirmingRecordAdd">
-        <x-slot name="title">
-            {{ isset($this->record->id) ? 'Editar registro' : 'Agregar registro' }}
-        </x-slot>
-
-        <x-slot name="content">
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="name" value="{{ __('Nombre') }}" />
-                <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="record.name" />
-                <x-input-error for="name" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="email" value="{{ __('Nombre') }}" />
-                <x-input id="email" type="text" class="mt-1 block w-full" wire:model.defer="record.email" />
-                <x-input-error for="email" class="mt-2" />
-            </div>
-        </x-slot>
-
-        <x-slot name="footer">
-            <x-secondary-button wire:click="$set('confirmingRecordAdd', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ml-3" wire:click="saveRecord({{ $confirmingRecordAdd }})" wire:loading.attr="disabled">
-                {{ __('Guardar') }}
-            </x-danger-button>
-        </x-slot>
-    </x-dialog-modal>
+    
 </div>

@@ -46,4 +46,10 @@ Route::middleware([
     Route::get('/menu', function () {
         return view('menu');
     })->name('menu');
+    Route::get('/ordenes', function () {
+        return view('ordenes');
+    })->name('ordenes');
+    Route::get('/facturas', function () {
+        return view('facturas');
+    })->name('facturas');
 });

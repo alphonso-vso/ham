@@ -13,13 +13,13 @@
     @endif
     <div>
         <div class="mt-1 mb-2 flex rounded-md shadow-sm">
-            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm mr-4" placeholder="Buscar">
+            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-slate-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm mr-4" placeholder="Buscar">
             <button wire:click="confirmRecordAdd" class="text-blue-500 hover:text-blue-700 mr-4 transition ease-in-out duration-150">{{ __('Agregar') }}</button>
         </div>
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+            <thead class="text-xs text-sky-50 uppercase bg-sky-800">
                 <tr>
                     <th scope="col" class="px-6 py-3 uppercase">
                         {{ __('Nombre') }}
@@ -42,9 +42,9 @@
             </thead>
             <tbody>
                 @foreach($datos as $dato)
-                <tr class="odd:bg-white even:bg-gray-100 bg-white border-b hover:bg-gray-100">
+                <tr class="odd:bg-white even:bg-slate-100 bg-white border-b hover:bg-slate-100">
                     <td class="px-6 py-3">{{ $dato->nombre }}</td>
-                    <td class="px-6 py-3">{{ $dato->precio }}</td>
+                    <td class="px-6 py-3">₡{{ $dato->precio }}</td>
                     <td class="px-6 py-3">{{ $dato->ingredientes }}</td>
                     <td class="px-6 py-3">{{ $dato->tiempo }}</td>
                     @role('super-admin')
@@ -64,17 +64,17 @@
         </div>
     </div>
     <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-        <div class="text-center text-sm text-gray-500 sm:text-left">
+        <div class="text-center text-sm text-slate-500 sm:text-left">
             <div class="flex items-center gap-4">
-                <a href="https://www.instagram.com/alphonso_vso/" class="group inline-flex items-center hover:text-gray-700 focus:outline focus:outline-2 focus:rounded-sm focus:outline-orange-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="-mt-px mr-1 w-5 h-5 stroke-gray-400 group-hover:stroke-gray-600">
+                <a href="https://www.instagram.com/alphonso_vso/" class="group inline-flex items-center hover:text-slate-700 focus:outline focus:outline-2 focus:rounded-sm focus:outline-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="-mt-px mr-1 w-5 h-5 stroke-slate-400 group-hover:stroke-slate-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                     </svg>
                     Dev
                 </a>
             </div>
         </div>
-        <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+        <div class="ml-4 text-center text-sm text-slate-500 sm:text-right sm:ml-0">
 
         </div>
     </div>
@@ -122,7 +122,7 @@
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="id_tiempo_comida" value="{{ __('Tiempo de comida') }}" />
-                <select wire:model.defer="record.id_tiempo_comida" id="id_tiempo_comida" class="mt-1 block w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm">
+                <select wire:model.defer="record.id_tiempo_comida" id="id_tiempo_comida" class="mt-1 block w-full border-slate-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm">
                     <option value="">{{ __('Selecciona un opción') }}</option>
                     @if(count($records) > 0)
                         @foreach ($records as $id => $nombre)

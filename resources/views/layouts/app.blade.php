@@ -19,7 +19,7 @@
     </head>
     <body class="font-sans antialiased">
 
-        <div class="min-h-screen bg-gray-50">
+        <div class="min-h-screen bg-slate-50">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->

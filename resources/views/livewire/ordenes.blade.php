@@ -13,8 +13,7 @@
     @endif
     <div>
         <div class="mt-1 mb-2 flex rounded-md shadow-sm">
-            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-slate-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm mr-4" placeholder="Buscar">
-            <button wire:click="confirmRecordAdd" class="text-blue-500 hover:text-blue-700 mr-4 transition ease-in-out duration-150">{{ __('Agregar') }}</button>
+            <input type="search" wire:model="search" name="search" id="search" class="block flex-1 rounded-none rounded-r-md rounded-l-md border-slate-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Buscar">
         </div>
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -22,19 +21,28 @@
             <thead class="text-xs text-sky-50 uppercase bg-sky-800">
                 <tr>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Nombre') }}
+                        {{ __('Hora') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Cliente') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Platillo') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3 uppercase">
+                        {{ __('Cantidad') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
                         {{ __('Precio') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Adicional') }}
+                        {{ __('Adicionales') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Creado') }}
+                        {{ __('Total') }}
                     </th>
                     <th scope="col" class="px-6 py-3 uppercase">
-                        {{ __('Actualizado') }}
+                        {{ __('Fecha') }}
                     </th>
                     @role('super-admin')
                     <th scope="col" class="px-6 py-3 uppercase">
@@ -45,15 +53,18 @@
             </thead>
             <tbody>
                 @foreach($datos as $dato)
+                    <td class="px-6 py-3">₡{{ ($dato->precio * $dato->cantidad) + ($dato->adicionales * $dato->precio_adicional) }}</td>
                 <tr class="odd:bg-white even:bg-slate-100 bg-white border-b hover:bg-slate-100">
-                    <td class="px-6 py-3">{{ $dato->nombre }}</td>
-                    <td class="px-6 py-3">₡{{ $dato->precio }}</td>
-                    <td class="px-6 py-3">{{ $dato->tiempo }}</td>
                     <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->created_at)->diffForHumans() }}</td>
-                    <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->updated_at)->diffForHumans() }}</td>
+                    <td class="px-6 py-3">{{ $dato->cliente }}</td>
+                    <td class="px-6 py-3">{{ $dato->platillo }}</td>
+                    <td class="px-6 py-3">{{ $dato->cantidad }}</td>
+                    <td class="px-6 py-3">₡{{ $dato->precio }}</td>
+                    <td class="px-6 py-3">{{ $dato->adicionales }}</td>
+                    <td class="px-6 py-3">₡{{ ($dato->precio * $dato->cantidad) + ($dato->adicionales * $dato->precio_adicional) }}</td>
+                    <td class="px-6 py-3">{{ \Carbon\Carbon::parse($dato->created_at)->format('d/m/Y h:i:s') }}</td>
                     @role('super-admin')
                     <td class="px-6 py-3">
-                        <a wire:click="confirmRecordEdit({{ $dato->id }})" class="text-blue-500 hover:text-blue-700 mr-4 transition ease-in-out duration-150" href="#">{{ __('Actualizar') }}</a>
                         <x-danger-button wire:click="confirmRecordDeletion({{ $dato->id }})" wire:loading.attr="disabled">
                             {{ __('Eliminar') }}
                         </x-danger-button>
@@ -102,45 +113,5 @@
             </x-danger-button>
         </x-slot>
     </x-dialog-modal>
-    <!-- Add Meal Confirmation Modal -->
-    <x-dialog-modal wire:model="confirmingRecordAdd">
-        <x-slot name="title">
-            {{ isset($this->record->id) ? 'Editar registro' : 'Agregar registro' }}
-        </x-slot>
-
-        <x-slot name="content">
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="nombre" value="{{ __('Nombre') }}" />
-                <x-input id="nombre" type="text" class="mt-1 block w-full" wire:model.defer="record.nombre" />
-                <x-input-error for="nombre" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="precio" value="{{ __('Precio') }}" />
-                <x-input id="precio" type="text" class="mt-1 block w-full" wire:model.defer="record.precio" />
-                <x-input-error for="precio" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="id_tiempo_comida" value="{{ __('Tiempo de comida') }}" />
-                <select wire:model.defer="record.id_tiempo_comida" id="id_tiempo_comida" class="mt-1 block w-full border-slate-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm">
-                    <option value="">{{ __('Selecciona un opción') }}</option>
-                    @if(count($records) > 0)
-                        @foreach ($records as $id => $nombre)
-                        <option value="{{ $id }}">{{ $nombre }}</option>
-                        @endforeach
-                    @endif
-                </select>
-                <x-input-error for="id_tiempo_comida" class="mt-2" />
-            </div>
-        </x-slot>
-
-        <x-slot name="footer">
-            <x-secondary-button wire:click="$set('confirmingRecordAdd', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ml-3" wire:click="saveRecord({{ $confirmingRecordAdd }})" wire:loading.attr="disabled">
-                {{ __('Guardar') }}
-            </x-danger-button>
-        </x-slot>
-    </x-dialog-modal>
+    
 </div>
